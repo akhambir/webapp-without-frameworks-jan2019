@@ -20,8 +20,9 @@ public class ViewModel {
         return attributes;
     }
 
-    public void addAttribute(String name, Object o) {
+    public ViewModel withAttribute(String name, Object o) {
         this.attributes.put(name, o);
+        return this;
     }
 
     public static ViewModel of(String view) {

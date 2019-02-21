@@ -28,5 +28,9 @@
         </div>
     </form>
 
+    <c:if test="${error != null}">
+        <p style="color: red; margin-left: 105px">Username of Password is incorrect!</p>
+    </c:if>
+
 </body>
 </html>

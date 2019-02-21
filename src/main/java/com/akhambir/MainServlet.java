@@ -10,13 +10,18 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.akhambir.Factory.*;
+
 
 public class MainServlet extends HttpServlet {
 
     private static final Map<Request, Controller> controllerMap = new HashMap<>();
 
     static {
-        controllerMap.put(Request.of("GET", "/servlet/login"), Factory.getLoginPageController());
+        controllerMap.put(Request.of("GET", "/servlet/login"), r -> ViewModel.of("login"));
+        controllerMap.put(Request.of("POST", "/servlet/login"), getLoginUserController(getUserServiceImpl()));
+        controllerMap.put(Request.of("GET", "/servlet/categories"), getGetAllCategoriesController(getCategoryService()));
+        controllerMap.put(Request.of("GET", "/servlet/category"), getGetCategoryByIdController(getCategoryService()));
     }
 
     @Override
@@ -30,7 +35,7 @@ public class MainServlet extends HttpServlet {
     }
 
     private void processRequest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Request request = Request.of(req.getMethod(), req.getRequestURI());
+        Request request = Request.of(req.getMethod(), req.getRequestURI(), req.getParameterMap());
         Controller controller = controllerMap.getOrDefault(request, r -> ViewModel.of("404"));
         ViewModel vm = controller.process(request);
         processViewModel(vm, req, resp);
