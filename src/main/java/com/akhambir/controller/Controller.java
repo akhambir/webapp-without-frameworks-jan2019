@@ -1,7 +1,7 @@
 package com.akhambir.controller;
 
-import com.akhambir.Request;
-import com.akhambir.ViewModel;
+import com.akhambir.web.Request;
+import com.akhambir.web.ViewModel;
 
 
 public interface Controller {

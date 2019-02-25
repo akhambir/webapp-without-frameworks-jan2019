@@ -1,4 +1,4 @@
-package com.akhambir;
+package com.akhambir.web;
 
 import java.util.Map;
 import java.util.Objects;

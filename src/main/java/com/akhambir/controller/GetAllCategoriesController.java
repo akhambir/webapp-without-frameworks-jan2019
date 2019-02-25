@@ -1,7 +1,7 @@
 package com.akhambir.controller;
 
-import com.akhambir.Request;
-import com.akhambir.ViewModel;
+import com.akhambir.web.Request;
+import com.akhambir.web.ViewModel;
 import com.akhambir.service.CategoryService;
 
 public class GetAllCategoriesController implements Controller {
