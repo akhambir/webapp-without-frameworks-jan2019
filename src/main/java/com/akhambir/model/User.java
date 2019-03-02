@@ -1,13 +1,15 @@
 package com.akhambir.model;
 
 public class User {
+    private Long id;
     private String username;
     private String password;
     private String token;
     private String firstName;
     private String lastName;
 
-    public User(String username, String password, String token, String firstName, String lastName) {
+    public User(Long id, String username, String password, String token, String firstName, String lastName) {
+        this.id = id;
         this.username = username;
         this.password = password;
         this.token = token;
@@ -18,6 +20,14 @@ public class User {
     public User(String username, String password) {
         this.username = username;
         this.password = password;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getUsername() {

@@ -24,13 +24,6 @@ public class DBEmulator {
         categories.add(category);
         categories.add(new Category(2L, "Shoes", "Italian shoes"));
         categories.add(new Category(3L, "TVs", "Chines TVs"));
-
-        users.add(new User(
-                "anton777",
-                "96cae35ce8a9b0244178bf28e4966c2ce1b8385723a96a6b838858cdd6ca0a1e", // 123123
-                "d0d95eb2-0a4c-4517-9744-297b3566178b",
-                "Anton",
-                "LastName"));
     }
 
     public static List<Category> getCategories() {
