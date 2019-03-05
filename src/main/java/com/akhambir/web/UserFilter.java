@@ -23,7 +23,7 @@ public class UserFilter implements Filter {
     public void init(FilterConfig filterConfig) throws ServletException {
         openUri.add("/servlet/login");
         openUri.add("/servlet/register");
-        userService = Factory.getUserServiceImpl();
+        userService = Factory.getUserServiceImpl(Factory.getUserDaoImpl(Factory.getConnection()));
     }
 
     @Override

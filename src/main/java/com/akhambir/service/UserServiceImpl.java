@@ -1,15 +1,21 @@
 package com.akhambir.service;
 
 import com.akhambir.DBEmulator;
+import com.akhambir.dao.UserDao;
 import com.akhambir.model.User;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.Optional;
 import java.util.UUID;
 
 public class UserServiceImpl implements UserService {
+
+    private final UserDao userDao;
+
+    public UserServiceImpl(UserDao userDao) {
+        this.userDao = userDao;
+    }
 
     @Override
     public Optional<User> authorize(User user) {
@@ -33,8 +39,7 @@ public class UserServiceImpl implements UserService {
         String hashedPassword = sha256(user.getPassword());
         user.setPassword(hashedPassword);
         user.setToken(generateToken());
-        DBEmulator.addUser(user);
-        return Optional.of(user);
+        return Optional.ofNullable(userDao.addUser(user));
     }
 
     @Override

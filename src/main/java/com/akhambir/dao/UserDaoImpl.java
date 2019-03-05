@@ -1,6 +1,7 @@
 package com.akhambir.dao;
 
 import com.akhambir.Factory;
+import com.akhambir.model.Category;
 import com.akhambir.model.User;
 
 import java.sql.*;
@@ -20,7 +21,7 @@ public class UserDaoImpl implements UserDao {
         PreparedStatement statement;
 
         try {
-            statement = connection.prepareStatement(query);
+            statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             statement.setNull(1, -5);
             statement.setString(2, user.getUsername());
             statement.setString(3, user.getPassword());
@@ -40,15 +41,8 @@ public class UserDaoImpl implements UserDao {
     }
 
     public static void main(String[] args) {
-        User user = new User(null,
-                "lucky7",
-                "123123",
-                "token",
-                "Anton",
-                "'); drop table USERS;('");
-
-        UserDao userDao = new UserDaoImpl(Factory.getConnection());
-        User result = userDao.addUser(user);
-        System.out.println(result);
+        CategoryDao categoryDao = new CategoryDaoImpl(Factory.getConnection());
+        Category category = categoryDao.getCategoryById(1L);
+        System.out.println(category);
     }
 }

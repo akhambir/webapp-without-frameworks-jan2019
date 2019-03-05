@@ -14,8 +14,8 @@ public class DBEmulator {
     private static List<User> users = new ArrayList<>();
 
     static {
-        Product product = new Product("iPhone", "Apple product", 999.99);
-        Product product2 = new Product("samsung", "korean product", 700.99);
+        Product product = new Product(1L, "iPhone", "Apple product", 999.99);
+        Product product2 = new Product(2L, "samsung", "korean product", 700.99);
         List<Product> products = new ArrayList<>();
         products.add(product);
         products.add(product2);

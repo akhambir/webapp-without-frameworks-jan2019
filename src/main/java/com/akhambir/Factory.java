@@ -3,6 +3,10 @@ package com.akhambir;
 import com.akhambir.controller.GetAllCategoriesController;
 import com.akhambir.controller.GetCategoryByIdController;
 import com.akhambir.controller.LoginUserController;
+import com.akhambir.dao.CategoryDao;
+import com.akhambir.dao.CategoryDaoImpl;
+import com.akhambir.dao.UserDao;
+import com.akhambir.dao.UserDaoImpl;
 import com.akhambir.service.CategoryService;
 import com.akhambir.service.CategoryServiceImpl;
 import com.akhambir.service.UserService;
@@ -33,16 +37,24 @@ public class Factory {
         return new LoginUserController(userService);
     }
 
-    public static UserService getUserServiceImpl() {
-        return new UserServiceImpl();
+    public static UserService getUserServiceImpl(UserDao userDao) {
+        return new UserServiceImpl(userDao);
+    }
+
+    public static UserDao getUserDaoImpl(Connection connection) {
+        return new UserDaoImpl(connection);
     }
 
     public static GetAllCategoriesController getGetAllCategoriesController(CategoryService categoryService) {
         return new GetAllCategoriesController(categoryService);
     }
 
-    public static CategoryService getCategoryService() {
-        return new CategoryServiceImpl();
+    public static CategoryService getCategoryService(CategoryDao categoryDao) {
+        return new CategoryServiceImpl(categoryDao);
+    }
+
+    public static CategoryDao getCategoryDao(Connection connection) {
+        return new CategoryDaoImpl(connection);
     }
 
     public static GetCategoryByIdController getGetCategoryByIdController(CategoryService categoryService) {
