@@ -23,12 +23,6 @@ public class UserServiceImpl implements UserService {
                 .filter(r -> r.getUsername().equals(user.getUsername()))
                 .findFirst();
 
-        /*if (u.isPresent()) {
-            if(u.get().getPassword().equals(sha256(user.getPassword()))) {
-                return u;
-            }
-        }*/
-
         return u.map(User::getPassword)
                 .filter(p -> p.equals(sha256(user.getPassword())))
                 .flatMap(p -> u);  //temporary
@@ -44,9 +38,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<User> findByToken(String token) {
-        return DBEmulator.getUsers().stream()
-                .filter(u -> u.getToken().equals(token))
-                .findFirst();
+        return Optional.ofNullable(userDao.getByToken(token));
     }
 
     public static String sha256(String base) {

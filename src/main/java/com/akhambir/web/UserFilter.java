@@ -1,6 +1,7 @@
 package com.akhambir.web;
 
 import com.akhambir.Factory;
+import com.akhambir.model.Role;
 import com.akhambir.model.User;
 import com.akhambir.service.UserService;
 
@@ -33,17 +34,30 @@ public class UserFilter implements Filter {
 
         if (openUri.contains(req.getRequestURI())) {
             processRequest(request, response, chain);
-        } else {
+        } else  {
             Optional<User> user = Stream.of(cookies)
                     .filter(c -> c.getName().equals("Mate_Application"))
                     .findFirst()
                     .map(Cookie::getValue)
                     .flatMap(userService::findByToken);
 
-            if (user.isPresent()) {
-                processRequest(request, response, chain);
+            if (req.getRequestURI().startsWith("/servlet/admin")) {
+                boolean isAuthorized =  user.map(u -> u.getRoles().stream()
+                        .filter(r -> r.getRoleName().equals(Role.RoleName.ADMIN)))
+                        .isPresent();
+
+                if (isAuthorized) {
+                    processRequest(request, response, chain);
+                } else {
+                    dispatch(request, response, "notAllowed");
+                }
+
             } else {
-                req.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(req, response);
+                if (user.isPresent()) {
+                    processRequest(request, response, chain);
+                } else {
+                    dispatch(request, response, "login");
+                }
             }
         }
     }
@@ -51,6 +65,10 @@ public class UserFilter implements Filter {
     @Override
     public void destroy() {
 
+    }
+
+    private void dispatch(ServletRequest request, ServletResponse response, String viewName) throws ServletException, IOException {
+        request.getRequestDispatcher(String.format("/WEB-INF/views/%s.jsp", viewName)).forward(request, response);
     }
 
     private void processRequest(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {

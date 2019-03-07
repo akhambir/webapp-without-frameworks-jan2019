@@ -1,5 +1,8 @@
 package com.akhambir.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class User {
     private Long id;
     private String username;
@@ -7,6 +10,7 @@ public class User {
     private String token;
     private String firstName;
     private String lastName;
+    private List<Role> roles = new ArrayList<>();
 
     public User(Long id, String username, String password, String token, String firstName, String lastName) {
         this.id = id;
@@ -72,5 +76,13 @@ public class User {
 
     public static User of(String username, String password) {
         return new User(username, password);
+    }
+
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
     }
 }

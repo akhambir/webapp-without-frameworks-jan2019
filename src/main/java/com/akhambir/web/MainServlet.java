@@ -23,6 +23,7 @@ public class MainServlet extends HttpServlet {
         controllerMap.put(Request.of("POST", "/servlet/login"), getLoginUserController(getUserServiceImpl(getUserDaoImpl(getConnection()))));
         controllerMap.put(Request.of("GET", "/servlet/categories"), getGetAllCategoriesController(getCategoryService(getCategoryDao(getConnection()))));
         controllerMap.put(Request.of("GET", "/servlet/category"), getGetCategoryByIdController(getCategoryService(getCategoryDao(getConnection()))));
+        controllerMap.put(Request.of("GET", "/servlet/admin"), r -> ViewModel.of("admin"));
     }
 
     @Override

@@ -24,6 +24,13 @@ public class DBEmulator {
         categories.add(category);
         categories.add(new Category(2L, "Shoes", "Italian shoes"));
         categories.add(new Category(3L, "TVs", "Chines TVs"));
+        users.add(new User(
+                1L,
+                "lucky7",
+                "96cae35ce8a9b0244178bf28e4966c2ce1b8385723a96a6b838858cdd6ca0a1e", // 123123
+                "token4",
+                "Anton",
+                "LastName"));
     }
 
     public static List<Category> getCategories() {
@@ -31,10 +38,12 @@ public class DBEmulator {
     }
 
     public static List<User> getUsers() {
+
         return users;
     }
 
     public static void addUser(User user) {
         users.add(user);
     }
+
 }
