@@ -5,7 +5,12 @@ import com.akhambir.model.Role;
 import com.akhambir.model.User;
 import com.akhambir.service.UserService;
 
-import javax.servlet.*;
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
@@ -43,8 +48,8 @@ public class UserFilter implements Filter {
 
             if (req.getRequestURI().startsWith("/servlet/admin")) {
                 boolean isAuthorized =  user.map(u -> u.getRoles().stream()
-                        .filter(r -> r.getRoleName().equals(Role.RoleName.ADMIN)))
-                        .isPresent();
+                        .anyMatch(r -> r.getRoleName().equals(Role.RoleName.ADMIN)))
+                        .orElse(false);
 
                 if (isAuthorized) {
                     processRequest(request, response, chain);
